@@ -1,0 +1,95 @@
+body {
+  font-family: "Allerta Stencil", Verdana, Geneva, Tahoma, sans-serif;
+  background-image: url("./images/backround.jpg");
+  margin: 70px 600px 10px;
+  color: #fff;
+  background-color: black;
+ 
+}
+
+.container {
+  border-radius: 12px;
+  padding: 20px;
+  background: black;
+  border: 4px ridge #B0EFFFFF;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+  0 6px 20px 0 rgba(136, 244, 252, 0.473);
+}
+
+.display {
+  font-size: 26px;
+  padding: 15px;
+  margin: 5px 10px 20px;
+  border: 2px solid #B0EFFFFF;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+  0 6px 20px 0 rgba(136, 244, 252, 0.473);
+  text-align: right;
+  background: rgba(64, 224, 208, 0.541);
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  font-family: "Allerta Stencil", Verdana, Geneva, Tahoma, sans-serif;
+  padding: 15px;
+  margin: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  background-color: black;
+  border: 2px solid #B0EFFFFF;
+  border-radius: 15px;
+  box-shadow: 0 9px rgba(136, 244, 252, 0.473);
+  flex-basis: 65px;
+}
+
+button.clear {
+  flex-basis: 150px;
+}
+
+button:hover {background-color: #3e828e96}
+
+button.divide:hover,
+button.multiply:hover,
+button.subtract:hover,
+button.add:hover,
+button.equal:hover{background-color: #19fff3c7}
+
+button.clear:hover,
+button.delete-left:hover{background-color: #ff9494c7}
+
+button:active {
+  background-color: #3e8e8e;
+  box-shadow: 0 5px #a7a7a7;
+  transform: translateY(4px);
+}
+
+
+/*///// FOOTER //////*/
+.footer {
+  font-size: 14px;
+  padding-top: 100px;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+  0 6px 20px 0 rgba(136, 244, 252, 0.473);
+}
+
+.icon:hover {
+  box-shadow: 0 4px 8px 0 turquoise
+}
