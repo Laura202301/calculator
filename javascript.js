@@ -112,6 +112,17 @@ buttons.forEach(button => {
       }
     }
     
+    // Handling the +/- button
+    else if (buttonText === "+/-") {
+      if (operator === "") {
+        firstNumber = -firstNumber;
+        displayValue = firstNumber;
+      } else {
+        secondNumber = -secondNumber;
+        displayValue = secondNumber;
+      }
+    }
+
     calculatorDisplay.textContent = displayValue; // Update the displayed value
   });
 });
