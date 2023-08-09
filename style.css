@@ -67,7 +67,7 @@ button.add:hover,
 button.equal:hover{background-color: #19fff3c7}
 
 button.clear:hover,
-button.delete-left:hover{background-color: #ff9494c7}
+button.backspace:hover{background-color: #ff9494c7}
 
 /*:active - especifica los estilos que se aplicarán cuando el botón esté siendo presionado*/
 button:active {

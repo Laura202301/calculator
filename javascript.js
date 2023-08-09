@@ -3,6 +3,7 @@ let firstNumber = 0;
 let secondNumber = 0;
 let operator = "";
 let displayValue = 0;
+let decimalPressed = false; // variable to track decimal point
 
 // Functions for basic arithmetic operations
 const add = function (firstNum, secondNum) {
@@ -45,17 +46,32 @@ const operationDisplay = document.getElementById('operationDisplay'); // Display
 buttons.forEach(button => {
   button.addEventListener('click', function () {
     const buttonText = button.textContent;
-    
+
     // Handling number buttons
     if (buttonText >= '0' && buttonText <= '9') {
       if (operator === "") {
-        firstNumber = parseFloat(calculatorDisplay.textContent + buttonText);
+        if (decimalPressed) {
+          firstNumber = parseFloat(calculatorDisplay.textContent + '.' + buttonText);
+          decimalPressed = false; // Reset decimalPressed
+        } else {
+          firstNumber = parseFloat(calculatorDisplay.textContent + buttonText);
+        }
         displayValue = firstNumber;
       } else {
-        secondNumber = parseFloat(calculatorDisplay.textContent + buttonText);
+        if (decimalPressed) {
+          secondNumber = parseFloat(calculatorDisplay.textContent + '.' + buttonText);
+          decimalPressed = false; // Reset decimalPressed
+        } else {
+          secondNumber = parseFloat(calculatorDisplay.textContent + buttonText);
+        }
         displayValue = secondNumber;
       }
-    } 
+    }
+    
+    // Handling the decimal button
+    else if (buttonText === ".") {
+      decimalPressed = true;
+    }
     
     // Handling operator buttons
     else if (buttonText === "+" || buttonText === "-" || buttonText === "x" || buttonText === "/") {
