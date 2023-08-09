@@ -104,14 +104,28 @@ buttons.forEach(button => {
     // Handling the backspace button
     else if (buttonText === "\u232B") {
       if (operator === "") {
-        firstNumber = Math.floor(firstNumber / 10);
-        displayValue = firstNumber;
+        // For the first number
+        const stringValue = firstNumber.toString();
+        if (stringValue.length > 1) {
+          firstNumber = parseFloat(stringValue.slice(0, -1));
+          displayValue = firstNumber;
+        } else {
+          firstNumber = 0;
+          displayValue = 0;
+        }
       } else {
-        secondNumber = Math.floor(secondNumber / 10);
-        displayValue = secondNumber;
+        // For the second number
+        const stringValue = secondNumber.toString();
+        if (stringValue.length > 1) {
+          secondNumber = parseFloat(stringValue.slice(0, -1));
+          displayValue = secondNumber;
+        } else {
+          secondNumber = 0;
+          displayValue = 0;
+        }
       }
     }
-    
+
     // Handling the +/- button
     else if (buttonText === "+/-") {
       if (operator === "") {
