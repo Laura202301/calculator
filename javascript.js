@@ -31,7 +31,7 @@ function operate(firstNum, secondNum, operator) {
     return add(firstNum, secondNum);
   } else if (operator === "-") {
     return subtract(firstNum, secondNum);
-  } else if (operator === "x") {
+  } else if (operator === "x" || operator === "*") {
     return multiply(firstNum, secondNum);
   } else if (operator === "/") {
     return divide(firstNum, secondNum);
@@ -44,99 +44,110 @@ const calculatorDisplay = document.getElementById('calculatorDisplay'); // Displ
 const operationDisplay = document.getElementById('operationDisplay'); // Display for operations
 
 buttons.forEach(button => {
-  button.addEventListener('click', function () {
-    const buttonText = button.textContent;
+  button.addEventListener('click', handleButtonClick);
+});
 
-    // Handling number buttons
-    if (buttonText >= '0' && buttonText <= '9') {
-      if (operator === "") {
-        if (decimalPressed) {
-          firstNumber = parseFloat(calculatorDisplay.textContent + '.' + buttonText);
-          decimalPressed = false; // Reset decimalPressed
-        } else {
-          firstNumber = parseFloat(calculatorDisplay.textContent + buttonText);
-        }
-        displayValue = firstNumber;
+// Function to handle button clicks
+function handleButtonClick() {
+  const buttonText = this.textContent;
+  handleInput(buttonText);
+}
+
+// Function to handle keyboard input
+document.addEventListener('keydown', function(event) {
+  const key = event.key;
+  handleInput(key);
+});
+
+// Function to handle both button clicks and keyboard input
+function handleInput(input) {
+  // Handling number buttons
+  if (input >= '0' && input <= '9') {
+    if (operator === "") {
+      if (decimalPressed) {
+        firstNumber = parseFloat(calculatorDisplay.textContent + '.' + input);
+        decimalPressed = false;
       } else {
-        if (decimalPressed) {
-          secondNumber = parseFloat(calculatorDisplay.textContent + '.' + buttonText);
-          decimalPressed = false; // Reset decimalPressed
-        } else {
-          secondNumber = parseFloat(calculatorDisplay.textContent + buttonText);
-        }
-        displayValue = secondNumber;
+        firstNumber = parseFloat(calculatorDisplay.textContent + input);
       }
-    }
-    
-    // Handling the decimal button
-    else if (buttonText === ".") {
-      decimalPressed = true;
-    }
-    
-    // Handling operator buttons
-    else if (buttonText === "+" || buttonText === "-" || buttonText === "x" || buttonText === "/") {
-      operator = buttonText;
-      displayValue = 0;
-      operationDisplay.textContent = firstNumber + " " + operator;
-    } 
-    
-    // Handling the equal button
-    else if (buttonText === "=") {
-      if (operator !== "" && secondNumber !== 0) {
-        const result = operate(firstNumber, secondNumber, operator);
-        displayValue = result;
-        firstNumber = result;
-        secondNumber = 0;
-        operator = "";
-        operationDisplay.textContent = "";
+      displayValue = firstNumber;
+    } else {
+      if (decimalPressed) {
+        secondNumber = parseFloat(calculatorDisplay.textContent + '.' + input);
+        decimalPressed = false;
+      } else {
+        secondNumber = parseFloat(calculatorDisplay.textContent + input);
       }
-    } 
-    
-    // Handling the Clear button
-    else if (buttonText === "Clear") {
-      firstNumber = 0;
+      displayValue = secondNumber;
+    }
+  }
+
+  // Handling the decimal button
+  else if (input === ".") {
+    decimalPressed = true;
+  }
+
+  // Handling operator buttons
+  else if (input === "+" || input === "-" || input === "x" || input === "*" || input === "/") {
+    operator = input;
+    displayValue = 0;
+    operationDisplay.textContent = firstNumber + " " + operator;
+  }
+
+  // Handling the equal button
+  else if (input === "=" || input === "Enter") {
+    if (operator !== "" && secondNumber !== 0) {
+      const result = operate(firstNumber, secondNumber, operator);
+      displayValue = result;
+      firstNumber = result;
       secondNumber = 0;
       operator = "";
-      displayValue = 0;
       operationDisplay.textContent = "";
-    } 
-    
-    // Handling the backspace button
-    else if (buttonText === "\u232B") {
-      if (operator === "") {
-        // For the first number
-        const stringValue = firstNumber.toString();
-        if (stringValue.length > 1) {
-          firstNumber = parseFloat(stringValue.slice(0, -1));
-          displayValue = firstNumber;
-        } else {
-          firstNumber = 0;
-          displayValue = 0;
-        }
-      } else {
-        // For the second number
-        const stringValue = secondNumber.toString();
-        if (stringValue.length > 1) {
-          secondNumber = parseFloat(stringValue.slice(0, -1));
-          displayValue = secondNumber;
-        } else {
-          secondNumber = 0;
-          displayValue = 0;
-        }
-      }
     }
+  }
 
-    // Handling the +/- button
-    else if (buttonText === "+/-") {
-      if (operator === "") {
-        firstNumber = -firstNumber;
+  // Handling the Clear button 
+  else if (input === "Clear" || input === "Delete") {
+    firstNumber = 0;
+    secondNumber = 0;
+    operator = "";
+    displayValue = 0;
+    operationDisplay.textContent = "";
+  }
+
+  // Handling the backspace button 
+  else if (input === "\u232B" || input === "Backspace") {
+    if (operator === "") {
+      const stringValue = firstNumber.toString();
+      if (stringValue.length > 1) {
+        firstNumber = parseFloat(stringValue.slice(0, -1));
         displayValue = firstNumber;
       } else {
-        secondNumber = -secondNumber;
+        firstNumber = 0;
+        displayValue = 0;
+      }
+    } else {
+      const stringValue = secondNumber.toString();
+      if (stringValue.length > 1) {
+        secondNumber = parseFloat(stringValue.slice(0, -1));
         displayValue = secondNumber;
+      } else {
+        secondNumber = 0;
+        displayValue = 0;
       }
     }
+  }
 
-    calculatorDisplay.textContent = displayValue; // Update the displayed value
-  });
-});
+  // Handling the +/- button ("m" for minus on the keyboard)
+  else if (input === "+/-" || input === "m") {
+    if (operator === "") {
+      firstNumber = -firstNumber;
+      displayValue = firstNumber;
+    } else {
+      secondNumber = -secondNumber;
+      displayValue = secondNumber;
+    }
+  }
+
+  calculatorDisplay.textContent = displayValue; // Update the displayed value
+}
