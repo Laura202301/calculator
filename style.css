@@ -69,6 +69,12 @@ button.equal:hover{background-color: #19fff3c7}
 button.clear:hover,
 button.backspace:hover{background-color: #ff9494c7}
 
+/*highlight for keydown-keyup events*/
+.highlighted {
+  background-color: #b3fffb; 
+  color: black;
+}
+
 /*:active - especifica los estilos que se aplicarán cuando el botón esté siendo presionado*/
 button:active {
   background-color: #3e8e8e;
