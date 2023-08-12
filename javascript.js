@@ -34,16 +34,23 @@ const divide = function (firstNum, secondNum) {
   return firstNum / secondNum;
 };
 
-// Function to perform the selected operation
-function operate(firstNum, secondNum, operator) {
+function operate(firstNum, secondNum, operator, decimalPlaces) {
+  let result;
+
   if (operator === "+") {
-    return add(firstNum, secondNum);
+    result = add(firstNum, secondNum);
   } else if (operator === "-") {
-    return subtract(firstNum, secondNum);
+    result = subtract(firstNum, secondNum);
   } else if (operator === "x" || operator === "*") {
-    return multiply(firstNum, secondNum);
+    result = multiply(firstNum, secondNum);
   } else if (operator === "/") {
-    return divide(firstNum, secondNum);
+    result = divide(firstNum, secondNum);
+  }
+
+  if (typeof result === "number") {
+    return result.toFixed(decimalPlaces); // Round the result to the specified decimal places
+  } else {
+    return result; // Return "Error" or other non-numeric values unchanged
   }
 }
 
@@ -137,9 +144,9 @@ function handleInput(input) {
   // Handling the equal button
   else if (input === "=" || input === "Enter") {
     if (operator !== "" && secondNumber !== 0) {
-      const result = operate(firstNumber, secondNumber, operator);
-      displayValue = result;
-      firstNumber = result;
+      const result = operate(firstNumber, secondNumber, operator, 4); // Specify the number of decimal places
+      displayValue = parseFloat(result); // Parse the rounded result back to a float
+      firstNumber = parseFloat(result); // Update the first number as well
       secondNumber = 0;
       operator = "";
       operationDisplay.textContent = "";
