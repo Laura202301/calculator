@@ -140,7 +140,14 @@ function handleInput(input) {
   else if (input === "+" || input === "-" || input === "x" || input === "*" || input === "/") {
     operator = input;
     displayValue = 0;
-    operationDisplay.textContent = firstNumber + " " + operator;
+    
+    // Set the operation display
+    const operationText = `${firstNumber} ${operator}`;
+    if (operationText.length > 15) {
+      operationDisplay.textContent = operationText.slice(0, 15);
+    } else {
+      operationDisplay.textContent = operationText;
+    }
   }
 
   // Handling the equal button
