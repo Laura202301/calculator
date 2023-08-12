@@ -110,22 +110,24 @@ function getButtonByKey(key) {
 function handleInput(input) {
   // Handling number buttons
   if (input >= '0' && input <= '9') {
-    if (operator === "") {
-      if (decimalPressed) {
-        firstNumber = parseFloat(calculatorDisplay.textContent + '.' + input);
-        decimalPressed = false;
+    if (calculatorDisplay.textContent.length < 15) {
+      if (operator === "") {
+        if (decimalPressed) {
+          firstNumber = parseFloat(calculatorDisplay.textContent + '.' + input);
+          decimalPressed = false;
+        } else {
+          firstNumber = parseFloat(calculatorDisplay.textContent + input);
+        }
+        displayValue = firstNumber;
       } else {
-        firstNumber = parseFloat(calculatorDisplay.textContent + input);
+        if (decimalPressed) {
+          secondNumber = parseFloat(calculatorDisplay.textContent + '.' + input);
+          decimalPressed = false;
+        } else {
+          secondNumber = parseFloat(calculatorDisplay.textContent + input);
+        }
+        displayValue = secondNumber;
       }
-      displayValue = firstNumber;
-    } else {
-      if (decimalPressed) {
-        secondNumber = parseFloat(calculatorDisplay.textContent + '.' + input);
-        decimalPressed = false;
-      } else {
-        secondNumber = parseFloat(calculatorDisplay.textContent + input);
-      }
-      displayValue = secondNumber;
     }
   }
 
@@ -149,6 +151,15 @@ function handleInput(input) {
       firstNumber = parseFloat(result); // Update the first number as well
       secondNumber = 0;
       operator = "";
+
+      // Truncate the result if it exceeds the character limit
+      const resultString = result.toString();
+      if (resultString.length > 15) {
+        calculatorDisplay.textContent = resultString.slice(0, 15);
+      } else {
+        calculatorDisplay.textContent = resultString;
+      }
+
       operationDisplay.textContent = "";
     }
   }
